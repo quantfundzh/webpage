@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantitative Student Fund Zurich</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#000;
+  --fg:#fff;
+  --muted:#cfcfcf;
+  --line:#2a2a2a;
+  --title-font:'Montserrat', sans-serif;
+}
+
+body { margin:0; background:var(--bg); color:var(--fg); font-family:system-ui; }
+.container { width: min(800px, 92%); margin:auto; }
+
+/* COMING SOON LABEL */
+.nav-inline a.coming {
+  position: relative;
+}
+
+.nav-inline a.coming::after {
+  content: "coming soon";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  top: 100%;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.nav-inline a.coming:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(14px);
+}
+
+/* HERO */
+.hero {
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  gap:50px;
+}
+
+/* SVG */
+.logo {
+  width:360px;
+  height:260px;
+}
+
+/* Q animation */
+circle, line {
+  opacity:0;
+  transition: opacity 0.6s ease;
+}
+
+/* SMOOTH BARS */
+.bar {
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: transform 0.8s cubic-bezier(.25,.1,.25,1);
+}
+
+/* TITLE */
+.title {
+  font-family:var(--title-font);
+  letter-spacing:0.355em;
+  line-height:1.1;
+  font-size:3.05vw;
+  transform: scaleX(1.05);
+  max-width:1500px;
+}
+
+/* INLINE NAV */
+.nav-inline {
+  display: flex;
+  gap: 50px;
+  margin-top: 60px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.nav-inline a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.nav-inline a:hover {
+  color: var(--fg);
+}
+
+/* SECTIONS */
+.section { padding:200px 0; text-align:center; }
+
+.eyebrow {
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-size:.8rem;
+  margin-bottom:20px;
+}
+
+/* VISION */
+.vision {
+  max-width: 720px;
+}
+
+.vision p {
+  line-height: 1.8;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.vision .block {
+  margin-bottom: 32px;
+}
+
+.vision .highlight {
+  font-size: 1.15rem;
+  color: var(--fg);
+  line-height: 1.6;
+  margin: 60px 0;
+  letter-spacing: 0.02em;
+}
+
+/* FOOTER */
+.footer {
+  border-top:1px solid var(--line);
+  background:#0a0a0a;
+  padding:80px 20px;
+  text-align:center;
+}
+
+.footer-inner {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.footer a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.footer a::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:0%;
+  height:1px;
+  background: var(--fg);
+  transition: width 0.3s ease;
+}
+
+.footer a:hover {
+  color: var(--fg);
+}
+
+.footer a:hover::after {
+  width:100%;
+}
+
+/* SCROLL FADE */
+.fade {
+  opacity:0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.fade.show {
+  opacity:1;
+  transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+<svg class="logo" viewBox="0 0 260 200" id="logo">
+  <circle cx="128" cy="100" r="87" stroke="white" stroke-width="7.0" fill="none" />
+  <line x1="182.5" y1="142.0" x2="225" y2="185" stroke="white" stroke-width="7.0" stroke-linecap="round" />
+
+  <rect class="bar" x="94" y="117" width="8" height="38" fill="white" />
+  <rect class="bar" x="113" y="102" width="8" height="53" fill="white" />
+  <rect class="bar" x="132" y="87" width="8" height="68" fill="white" />
+  <rect class="bar" x="151" y="70" width="8" height="85" fill="white" />
+</svg>
+
+<div class="title" id="title"></div>
+
+<div class="nav-inline">
+  <a href="#">Home</a>
+  <a href="#" class="coming">Team</a>
+<a href="#" class="coming">Projects</a>
+</div>
+
+</section>
+
+<!-- VISION -->
+<section class="section fade">
+  <div class="container vision">
+
+    <div class="eyebrow">The Vision</div>
+
+    <div class="block">
+      <p>
+        "Quantitative Finance is a field that combines Technology and Finance. Like every field where there is much to gain,
+        it is characterized by a highly competitive environment.
+      </p>
+    </div>
+   <div class="block">
+      <p>
+        Quantitative Finance is a field that combines Technology and Finance. Like every field where there is much to gain,
+        it is characterized by a highly competitive environment.
+      </p>
+    </div>
+
+    <div class="block">
+      <p>
+        Zurich is one of those cities around the world that harbours a significant amount of talent. Here, deep knowledge 
+        exists in both Technology and Finance.
+      </p>
+    </div>
+
+    <div class="block">
+      <p>
+        Despite this, Switzerland has faced moments that have called into question its reputation for trustworthiness and accountability.
+        These moments have shown that reputations depend on people willing to take responsibility and actively defend and uphold them.
+    </div>
+
+    <div class="block">
+      <p>
+        The Quantitative Student Fund is an initiative of a new generation of talented minds, recognizing that this responsibility has
+        not been met in recent times, and is willing to step up and carry the global image of Swiss quality with
+        accountability towards customers, investors, and business partners.
+      </p>
+    </div>
+
+    <div class="block">
+      <p>
+        We are a collaboration of innovative, cutting-edge projects in the field of quantitative finance. In a fast-paced world,
+        operating as dynamic, flexible teams is a crucial ingredient for success."
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- JOIN (hidden for now)
+<section class="section fade">
+  <div class="container">
+    <div class="eyebrow">Join us</div>
+    <p>text...</p>
+  </div>
+</section>
+-->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <a href="https://www.linkedin.com/company/quantitative-student-fund-zurich/" target="_blank">LinkedIn</a>
+  </div>
+</div>
+
+<script>
+// ELEMENTS
+const logo = document.getElementById('logo');
+const bars = document.querySelectorAll('.bar');
+let isHovering = false;
+
+function animateBars() {
+  bars.forEach(bar => {
+    const factor = 0.4 + Math.random() * 1.2;
+    bar.style.transform = `scaleY(${factor})`;
+  });
+}
+
+function resetBars() {
+  bars.forEach(bar => {
+    bar.style.transform = "scaleY(1)";
+  });
+}
+
+logo.addEventListener('mouseenter', () => {
+  isHovering = true;
+  animateBars();
+});
+
+logo.addEventListener('mouseleave', () => {
+  isHovering = false;
+  resetBars();
+});
+
+function idleAnimationLoop() {
+  const delay = 14000 + Math.random() * 16000;
+
+  setTimeout(() => {
+    if (!isHovering) {
+      animateBars();
+
+      const holdTime = 1000 + Math.random() * 3000;
+
+      setTimeout(() => {
+        if (!isHovering) resetBars();
+        idleAnimationLoop();
+      }, holdTime);
+
+    } else {
+      idleAnimationLoop();
+    }
+  }, delay);
+}
+
+setTimeout(idleAnimationLoop, 3500);
+
+// SCROLL FADE
+const fades = document.querySelectorAll('.fade');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) entry.target.classList.add('show');
+  });
+});
+fades.forEach(el => observer.observe(el));
+
+// ANIMATION SEQUENCE
+const circle = document.querySelector("circle");
+const line = document.querySelector("line");
+const titleEl = document.getElementById("title");
+
+const text = "QUANTITATIVE\nSTUDENT FUND\nZURICH";
+
+setTimeout(() => {
+  circle.style.opacity = 1;
+  line.style.opacity = 1;
+}, 300);
+
+setTimeout(() => {
+  bars.forEach((bar, i) => {
+    const factor = 0.7 + Math.random() * 0.6;
+    setTimeout(() => {
+      bar.style.transform = `scaleY(${factor})`;
+    }, i * 120);
+  });
+}, 900);
+
+setTimeout(() => {
+  resetBars();
+}, 2000);
+
+setTimeout(() => {
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      titleEl.innerHTML += text[i] === "\n" ? "<br>" : text[i];
+      i++;
+      setTimeout(type, 40);
+    }
+  }
+  type();
+}, 1600);
+
+setTimeout(() => {
+  document.querySelector('.nav-inline').style.opacity = 1;
+}, 2600);
+
+</script>
+
+</body>
+</html>
