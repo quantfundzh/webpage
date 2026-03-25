@@ -194,6 +194,81 @@ circle, line {
   opacity:1;
   transform: translateY(0);
 }
+
+/* =========================
+   MOBILE ONLY (ISOLATED)
+   ========================= */
+@media (max-width: 768px) {
+
+  /* Prevent layout bugs */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    gap: 28px;
+    padding: 40px 0;
+    min-height: 100svh;
+  }
+
+  .logo {
+    width: 240px;
+    height: auto;
+  }
+
+  /* TITLE (no desktop impact) */
+  .title {
+    font-size: 6vw;
+    letter-spacing: 0.28em;
+    line-height: 1.15;
+    transform: scaleX(1.03);
+    margin-left: 0.28em;
+    max-width: 92%;
+  }
+
+  /* NAV */
+  .nav-inline {
+    gap: 26px;
+    margin-top: 30px;
+  }
+
+  .nav-inline a {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+  }
+
+  .nav-inline a:active {
+    opacity: 0.6;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 120px 0;
+  }
+
+  .vision p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .vision .highlight {
+    font-size: 1.05rem;
+    margin: 40px 0;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 60px 20px;
+  }
+  
+  .logo:active {
+    transform: scale(0.97);
+    transition: transform 0.15s ease;
+  
+}
+}
+
 </style>
 </head>
 
@@ -380,6 +455,22 @@ setTimeout(() => {
   document.querySelector('.nav-inline').style.opacity = 1;
 }, 2600);
 
+if (window.matchMedia("(max-width: 768px)").matches) {
+
+  let touchTimeout;
+
+  logo.addEventListener('touchstart', () => {
+    animateBars();
+
+    // clear any previous reset
+    clearTimeout(touchTimeout);
+
+    // hold animation for a bit (feels intentional)
+    touchTimeout = setTimeout(() => {
+      resetBars();
+    }, 800); // tweak: 600–1200ms for feel
+  });
+}
 </script>
 
 </body>
