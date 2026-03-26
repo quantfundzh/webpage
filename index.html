@@ -212,10 +212,7 @@ circle, line {
     min-height: 100svh;
   }
 
-  .logo {
-    width: 240px;
-    height: auto;
-  }
+  
 
   /* TITLE (no desktop impact) */
   .title {
@@ -268,6 +265,57 @@ circle, line {
   
 }
 }
+
+/* =========================
+   PAPER MODE (EASTER EGG)
+   ========================= */
+
+body {
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+body.paper-mode {
+  --bg: #f7f7f7;
+  --fg: #0a0a0a;
+  --muted: #6a6a6a;
+  --line: #dddddd;
+}
+
+/* subtle notebook grid */
+body.paper-mode::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* keep content above grid */
+body.paper-mode * {
+  position: relative;
+  z-index: 1;
+}
+
+/* invert logo strokes */
+body.paper-mode circle,
+body.paper-mode line {
+  stroke: #0a0a0a;
+}
+
+/* bars = market colors */
+body.paper-mode .bar {
+  transition: transform 0.8s cubic-bezier(.25,.1,.25,1), fill 0.3s ease;
+}
+
+body.paper-mode .footer {
+  background:   #fffbe6; /* soft post-it yellow */
+}
+
+
 
 </style>
 </head>
@@ -365,12 +413,26 @@ function animateBars() {
     const factor = 0.4 + Math.random() * 1.2;
     bar.style.transform = `scaleY(${factor})`;
   });
+
+  // ✅ apply colors AFTER scaling
+  updateBarColors();
+}
+function updateBarColors() {
+  bars.forEach(bar => {
+    if (document.body.classList.contains("paper-mode")) {
+      const isGreen = Math.random() > 0.5;
+      bar.style.fill = isGreen ? "#16a34a" : "#dc2626";
+    } else {
+      bar.style.fill = "white";
+    }
+  });
 }
 
 function resetBars() {
   bars.forEach(bar => {
     bar.style.transform = "scaleY(1)";
   });
+
 }
 
 logo.addEventListener('mouseenter', () => {
@@ -455,20 +517,68 @@ setTimeout(() => {
   document.querySelector('.nav-inline').style.opacity = 1;
 }, 2600);
 
+// DESKTOP: toggle paper mode with repeated hovers
+let hoverCount = 0;
+let hoverTimer;
+
+function togglePaperMode() {
+  document.body.classList.toggle("paper-mode");
+
+  // ✅ force correct color immediately ONCE
+  bars.forEach(bar => {
+    bar.style.fill = document.body.classList.contains("paper-mode")
+      ? (Math.random() > 0.5 ? "#16a34a" : "#dc2626")
+      : "white";
+  });
+
+  resetBars();
+}
+
+
+
+logo.addEventListener('mouseleave', () => {
+
+  hoverCount++;
+
+  clearTimeout(hoverTimer);
+  hoverTimer = setTimeout(() => {
+    hoverCount = 0;
+  }, 800);
+
+  if (hoverCount >= 8) {
+    togglePaperMode();
+    hoverCount = 0;
+  }
+});
+
 if (window.matchMedia("(max-width: 768px)").matches) {
 
   let touchTimeout;
+  let tapCount = 0;
+  let tapTimer;
 
   logo.addEventListener('touchstart', () => {
+
+    // KEEP your animation exactly as is
     animateBars();
 
-    // clear any previous reset
     clearTimeout(touchTimeout);
-
-    // hold animation for a bit (feels intentional)
     touchTimeout = setTimeout(() => {
       resetBars();
-    }, 800); // tweak: 600–1200ms for feel
+    }, 800);
+
+    // ---- easter egg logic (added, not interfering)
+    tapCount++;
+
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => {
+      tapCount = 0;
+    }, 600);
+
+    if (tapCount >= 8) {
+      togglePaperMode();
+      tapCount = 0;
+    }
   });
 }
 </script>
